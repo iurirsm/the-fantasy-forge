@@ -6,40 +6,35 @@
   <title>The Fantasy Forge</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
-
   <style>
     html, body {
       margin: 0;
       padding: 0;
       height: 100%;
       scroll-behavior: smooth;
+      background: transparent;
+      overflow-x: hidden;
     }
     body {
       font-family: 'Uncial Antiqua', serif;
       scroll-snap-type: y proximity;
       overflow-y: scroll;
-      background-color: #0e0c0c;
+      background-color: transparent;
+      position: relative;
+      z-index: 1;
+      color: #f6e6cb;
     }
     section {
       scroll-snap-align: start;
-      height: 100vh;
+      min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 2rem;
+      background-color: rgba(14, 12, 12, 0.75);
+      backdrop-filter: blur(2px);
     }
-    .section-1 {
-      background: radial-gradient(circle at top, #1b0f0f 0%, #0e0c0c 100%);
-      color: #f6e6cb;
-    }
-    .section-2 {
-      background: linear-gradient(to bottom, #1f1a17, #120f0f);
-      color: #ffe6cc;
-    }
-    .section-3 {
-      background: radial-gradient(ellipse at center, #2d1e1e, #110d0d);
-      color: #f3d9b1;
-    }
+
     .fantasy-btn {
       background: linear-gradient(to right, #a34000, #ff9900);
       color: white;
@@ -76,15 +71,24 @@
   </style>
 </head>
 
-<body>
+<body class="text-white relative z-10">
 
-  <!-- 🔥 Banner Space -->
+  <!-- 🔥 Background Video -->
+  <div class="fixed top-0 left-0 w-full h-full -z-20 overflow-hidden">
+    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20 opacity-70">
+      <source src="assets/firebg.mp4" type="video/mp4">
+    </video>
+    <!-- Optional dark overlay for contrast -->
+    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/60 via-transparent to-black/70 -z-10"></div>
+  </div>
+
+  <!-- 🏷️ Header -->
   <header class="h-32 bg-black flex items-center justify-center shadow-lg z-10 border-b border-yellow-700">
     <h1 class="text-4xl text-yellow-400 tracking-wider">The Fantasy Forge</h1>
   </header>
 
   <!-- 📸 Section 1: Instagram -->
-  <section class="section-1 fade-in">
+  <section class="fade-in">
     <h2 class="text-3xl text-center mb-6">📸 Our Latest Creations</h2>
     <div class="flex justify-center">
       <div id="instagram-feed" class="flex flex-wrap justify-center gap-4"></div>
@@ -100,12 +104,10 @@
     </script>
   </section>
 
-  <!-- 📅 Section 2: Calendar -->
-  <section class="section-2 fade-in">
+  <!-- 📍 Section 2: Calendar -->
+  <section class="fade-in">
     <h2 class="text-3xl text-center mb-6">📍 Where to Find Us</h2>
-
     <div class="flex flex-col lg:flex-row items-center justify-center gap-8 px-4">
-      <!-- 🧙‍♀️ Merchant Image -->
       <div class="w-[250px] flex-shrink-0">
         <img 
           src="assets/traveling-merchant.png"
@@ -114,8 +116,6 @@
           style="filter: drop-shadow(0 0 10px #ffb347);" 
         />
       </div>
-
-      <!-- 📅 Google Calendar -->
       <div class="w-full max-w-3xl">
         <iframe
           src="https://calendar.google.com/calendar/embed?src=32cffb5fb476f0c8d44d45efa417aa3c60b87e5fa3cd8d62a10f6d9fa2d9e37b%40group.calendar.google.com&ctz=America%2FHalifax"
@@ -131,12 +131,11 @@
   </section>
 
   <!-- 🧙 Section 3: Commission Form -->
-  <section class="section-3 fade-in">
+  <section class="fade-in">
     <h2 class="text-3xl text-center mb-4">🔥 Request a Commission</h2>
     <p class="text-center mb-6 max-w-xl mx-auto italic text-orange-200">
       Have a dream prop, wild creature, or fantasy artifact in mind? Send us your vision, and we'll forge it in reality.
     </p>
-
     <form
       action="https://formspree.io/f/xeokpkya"
       method="POST"
@@ -144,55 +143,52 @@
     >
       <input type="email" name="email" placeholder="Your Email" required
         class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-      <input type="text" name="name" placeholder="Your Name"
+      <input type="text" name="name" placeholder="Your Name" required
         class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-      <textarea name="message" placeholder="What would you like printed?"
+      <textarea name="message" placeholder="What would you like printed?" required
         class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded h-32" required></textarea>
       <input type="text" name="references" placeholder="Reference Links or photos (optional)"
         class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
       <input type="text" name="deadline" placeholder="Deadline (if any)"
         class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-
       <div class="text-center pt-2">
         <button type="submit" class="fantasy-btn">Forge My Print</button>
       </div>
     </form>
   </section>
 
-
   <!-- 🧙‍♂️ Section 4: About Us -->
-<section class="bg-gradient-to-b from-[#1a0e0e] to-[#0e0c0c] text-yellow-100 px-6 py-16 fade-in">
-  <div class="max-w-3xl mx-auto text-center">
-    <h2 class="text-3xl mb-4">🛠️ About The Fantasy Forge</h2>
-    <p class="mb-6 text-lg">
-      The Fantasy Forge is a mobile 3D print store powered by imagination, steam, and a touch of magic. 
-      From Halifax’s waterfront to fantasy fairs and local markets, we bring creations to life — one layer at a time.
-    </p>
-
-    <div class="flex justify-center mb-6">
-      <iframe 
-        src="https://www.instagram.com/p/DFkykSuRBLa/embed" 
-        width="400" 
-        height="480" 
-        frameborder="0" 
-        scrolling="no" 
-        allowtransparency="true" 
-        class="rounded-lg border border-yellow-700 shadow-lg"
-      ></iframe>
+  <section class="fade-in">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl mb-4">🛠️ About The Fantasy Forge</h2>
+      <p class="mb-6 text-lg">
+        The Fantasy Forge is a mobile 3D print store powered by imagination, steam, and a touch of magic. 
+        From Halifax’s waterfront to fantasy fairs and local markets, we bring creations to life — one layer at a time.
+      </p>
+      <div class="flex justify-center mb-6">
+        <iframe 
+          src="https://www.instagram.com/p/DFkykSuRBLa/embed" 
+          width="400" 
+          height="480" 
+          frameborder="0" 
+          scrolling="no" 
+          allowtransparency="true" 
+          class="rounded-lg border border-yellow-700 shadow-lg"
+        ></iframe>
+      </div>
+      <p class="italic text-orange-300">
+        Born from the sparks of creativity and forged by two dreamers who call Halifax home.
+      </p>
     </div>
+  </section>
 
-    <p class="italic text-orange-300">Born from the sparks of creativity and forged by two dreamers who call Halifax home.</p>
-  </div>
-</section>
-
-
-  <!-- 🛠️ Footer -->
+  <!-- ⚙️ Footer -->
   <footer class="text-center py-4 text-sm text-yellow-500 bg-black border-t border-yellow-700">
     &copy; 2025 The Fantasy Forge • Forged in Fire & Steam<br />
     <a href="privacy-policy.html" class="underline text-yellow-400">Privacy Policy</a>
   </footer>
 
-  <!-- ✨ Section fade-in logic -->
+  <!-- ✨ Fade-in Animation Script -->
   <script>
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
