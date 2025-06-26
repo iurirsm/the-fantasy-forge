@@ -2,63 +2,119 @@
 <html lang="en" class="scroll-smooth">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>The Fantasy Forge</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <style>
     html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      scroll-behavior: smooth;
-      background: transparent;
-      overflow-x: hidden;
-    }
-    body {
+      margin: 0; padding: 0; height: 100%; overflow-x: hidden;
       font-family: 'Uncial Antiqua', serif;
-      scroll-snap-type: y proximity;
-      overflow-y: scroll;
-      background-color: transparent;
-      position: relative;
-      z-index: 1;
+      scroll-behavior: smooth;
+      background: #000000;
       color: #f6e6cb;
     }
+    body {
+      scroll-snap-type: y proximity;
+      overflow-y: scroll;
+      position: relative;
+      z-index: 1;
+    }
     section {
-      scroll-snap-align: start;
+      scroll-snap-align: none;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding: 2rem;
-      background-color: rgba(14, 12, 12, 0.75);
+      /*background-color: rgba(14, 12, 12, 0.75);*/
       backdrop-filter: blur(2px);
+      margin-left: 180px;  /* Left border width */
+      margin-right: 180px; /* Right border width */
+    }
+    /* Banner styling */
+    
+    /*
+    header {
+      position: relative;
+      height: 700px;
+      width: 90vw;
+      overflow: hidden;
+      z-index: 20;
+      margin-left: 180px;
+      margin-right: 180px;
+    }
+    */
+    
+    header {
+  position: relative;
+  height: 700px;
+  width: 100vw;
+  left: 0;
+  margin-left: 0;
+  margin-right: 0;
+  overflow: hidden;
+  z-index: 200; /* higher than nav */
+}
+
+    header img {
+      width: 100%;
+      height: 700px;
+      object-fit: fill; 
+      user-select: none;
+      pointer-events: none;
     }
 
-    .fantasy-btn {
-      background: linear-gradient(to right, #a34000, #ff9900);
-      color: white;
-      padding: 0.75rem 2rem;
-      border-radius: 0.5rem;
-      font-weight: bold;
-      border: 2px solid #d49b00;
-      box-shadow: 0 0 10px #a34000;
+    /* Floating sticky menu */
+
+    /*
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 180px;
+      background: linear-gradient(180deg, #000000 100%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding-top: 3rem;
+      z-index: 100;
+    }*/
+
+    nav {
+  position: fixed;
+  top: 0;
+  left: 40px;        /* push menu 40px away from left edge */
+  height: 100vh;
+  width: 180px;
+  background: linear-gradient(180deg, #000000 100%);
+  z-index: 100;      /* less than header so banner covers menu */
+  box-shadow: 2px 0 6px rgba(0,0,0,0.7); /* subtle shadow */
+  border-radius: 0 8px 8px 0; /* optional rounding for style */
+}
+    
+    nav button {
+      background: linear-gradient(to right, #ff7f00, #ffae00);
+      color: #3b1f00;
+      font-weight: 700;
+      margin: 0.5rem 0;
+      padding: 0.8rem 1.2rem;
+      border: none;
+      border-radius: 9999px;
+      box-shadow: 0 0 10px #ffae00;
+      cursor: pointer;
+      width: 140px;
+      transition: background 0.3s ease, box-shadow 0.3s ease;
     }
-    .fantasy-btn:hover {
-      background: linear-gradient(to right, #c45600, #ffc94d);
-      box-shadow: 0 0 15px #ffb300;
+    nav button:hover, nav button.active {
+      background: linear-gradient(to right, #ffae00, #ffd75a);
+      box-shadow: 0 0 20px #ffd75a;
+      color: #5a3200;
     }
 
-    @keyframes floatWiggle {
-      0%, 100% { transform: translateY(0) rotate(0deg); }
-      25% { transform: translateY(-5px) rotate(-1deg); }
-      50% { transform: translateY(-8px) rotate(1deg); }
-      75% { transform: translateY(-5px) rotate(-1deg); }
-    }
-    .float-merchant {
-      animation: floatWiggle 6s ease-in-out infinite;
-    }
-
+    /* Sections fade in */
     .fade-in {
       opacity: 0;
       transform: translateY(20px);
@@ -68,27 +124,45 @@
       opacity: 1;
       transform: translateY(0);
     }
+
+    /* Particle background container */
+    #particles-js {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      background: #000000;
+    }
+
+    /* Instagram widget smaller but still readable */
+    #instagram-feed {
+      max-width: 90vw;
+      max-height: 420px;
+      margin: auto;
+    }
   </style>
 </head>
+<body>
 
-<body class="text-white relative z-10">
+  <!-- Particle background -->
+  <div id="particles-js"></div>
 
-  <!-- 🔥 Background Video -->
-  <div class="fixed top-0 left-0 w-full h-full -z-20 overflow-hidden">
-    <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-20 opacity-70">
-      <source src="assets/firebg.mp4" type="video/mp4">
-    </video>
-    <!-- Optional dark overlay for contrast -->
-    <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-black/60 via-transparent to-black/70 -z-10"></div>
-  </div>
+  <!-- Sticky menu nav -->
+  <nav>
+    <button data-target="section-instagram" class="active">Our Latest Creations</button>
+    <button data-target="section-calendar">Where to Find Us</button>
+    <button data-target="section-commission">Request a Commission</button>
+    <button data-target="section-about">About Us</button>
+  </nav>
 
-  <!-- 🏷️ Header -->
-  <header class="h-32 bg-black flex items-center justify-center shadow-lg z-10 border-b border-yellow-700">
-    <h1 class="text-4xl text-yellow-400 tracking-wider">The Fantasy Forge</h1>
+  <!-- Banner -->
+  <header>
+    <img src="assets/banner.png" alt="The Fantasy Forge Banner" />
   </header>
 
-  <!-- 📸 Section 1: Instagram -->
-  <section class="fade-in">
+  <!-- Sections -->
+  <section id="section-instagram" class="fade-in">
     <h2 class="text-3xl text-center mb-6">📸 Our Latest Creations</h2>
     <div class="flex justify-center">
       <div id="instagram-feed" class="flex flex-wrap justify-center gap-4"></div>
@@ -104,8 +178,7 @@
     </script>
   </section>
 
-  <!-- 📍 Section 2: Calendar -->
-  <section class="fade-in">
+  <section id="section-calendar" class="fade-in">
     <h2 class="text-3xl text-center mb-6">📍 Where to Find Us</h2>
     <div class="flex flex-col lg:flex-row items-center justify-center gap-8 px-4">
       <div class="w-[250px] flex-shrink-0">
@@ -130,8 +203,7 @@
     </div>
   </section>
 
-  <!-- 🧙 Section 3: Commission Form -->
-  <section class="fade-in">
+  <section id="section-commission" class="fade-in">
     <h2 class="text-3xl text-center mb-4">🔥 Request a Commission</h2>
     <p class="text-center mb-6 max-w-xl mx-auto italic text-orange-200">
       Have a dream prop, wild creature, or fantasy artifact in mind? Send us your vision, and we'll forge it in reality.
@@ -157,8 +229,7 @@
     </form>
   </section>
 
-  <!-- 🧙‍♂️ Section 4: About Us -->
-  <section class="fade-in">
+  <section id="section-about" class="fade-in">
     <div class="max-w-3xl mx-auto text-center">
       <h2 class="text-3xl mb-4">🛠️ About The Fantasy Forge</h2>
       <p class="mb-6 text-lg">
@@ -182,27 +253,112 @@
     </div>
   </section>
 
-  <!-- ⚙️ Footer -->
-  <footer class="text-center py-4 text-sm text-yellow-500 bg-black border-t border-yellow-700">
+  <!-- Footer -->
+  <footer class="text-center py-4 text-sm text-yellow-500 bg-black border-t border-yellow-700" style="margin-left: 180px; margin-right: 180px;">
     &copy; 2025 The Fantasy Forge • Forged in Fire & Steam<br />
     <a href="privacy-policy.html" class="underline text-yellow-400">Privacy Policy</a>
   </footer>
 
-  <!-- ✨ Fade-in Animation Script -->
+  <!-- Fade-in Animation -->
   <script>
-    const observer = new IntersectionObserver((entries) => {
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
         }
       });
-    }, {
-      threshold: 0.2
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.fade-in').forEach(section => observer.observe(section));
+  </script>
+
+  <!-- Navigation scroll -->
+  <script>
+    const buttons = document.querySelectorAll('nav button');
+    buttons.forEach(button => {
+      button.addEventListener('click', () => {
+        const target = document.getElementById(button.dataset.target);
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth' });
+          buttons.forEach(btn => btn.classList.remove('active'));
+          button.classList.add('active');
+        }
+      });
     });
 
-    document.querySelectorAll('.fade-in').forEach(section => {
-      observer.observe(section);
+    // Update active button on scroll
+    window.addEventListener('scroll', () => {
+      let currentSectionId = '';
+      document.querySelectorAll('section').forEach(section => {
+        const sectionTop = section.offsetTop - 200;
+        if (pageYOffset >= sectionTop) {
+          currentSectionId = section.id;
+        }
+      });
+      buttons.forEach(btn => btn.classList.remove('active'));
+      if(currentSectionId) {
+        const activeBtn = [...buttons].find(b => b.dataset.target === currentSectionId);
+        if(activeBtn) activeBtn.classList.add('active');
+      }
     });
+  </script>
+
+  <!-- Particles config -->
+  <script>
+    particlesJS('particles-js',
+      {
+        "particles": {
+          "number": {
+            "value": 80,
+            "density": {"enable": true,"value_area": 800}
+          },
+          "color": {"value": "#ff7f00"},
+          "shape": {
+            "type": "circle",
+            "stroke": {"width": 0,"color": "#000000"},
+            "polygon": {"nb_sides": 5}
+          },
+          "opacity": {
+            "value": 0.7,
+            "random": false,
+            "anim": {"enable": true,"speed": 1,"opacity_min": 0.1,"sync": false}
+          },
+          "size": {
+            "value": 4,
+            "random": true,
+            "anim": {"enable": true,"speed": 10,"size_min": 0.1,"sync": false}
+          },
+          "line_linked": {
+            "enable": false
+          },
+          "move": {
+            "enable": true,
+            "speed": 3,
+            "direction": "top",
+            "random": true,
+            "straight": false,
+            "out_mode": "out",
+            "bounce": false,
+            "attract": {"enable": false,"rotateX": 600,"rotateY": 1200}
+          }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": {"enable": true,"mode": "repulse"},
+            "onclick": {"enable": true,"mode": "push"},
+            "resize": true
+          },
+          "modes": {
+            "grab": {"distance": 200,"line_linked": {"opacity": 1}},
+            "bubble": {"distance": 200,"size": 8,"duration": 2,"opacity": 0.8,"speed": 3},
+            "repulse": {"distance": 100,"duration": 0.4},
+            "push": {"particles_nb": 4},
+            "remove": {"particles_nb": 2}
+          }
+        },
+        "retina_detect": true
+      }
+    );
   </script>
 </body>
 </html>
