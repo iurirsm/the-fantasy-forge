@@ -1,364 +1,830 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>The Fantasy Forge</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Fantasy Forge - Where Magic Meets Steam</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
   <style>
-    html, body {
-      margin: 0; padding: 0; height: 100%; overflow-x: hidden;
-      font-family: 'Uncial Antiqua', serif;
-      scroll-behavior: smooth;
-      background: #000000;
-      color: #f6e6cb;
+    :root {
+      --copper: #b87333;
+      --brass: #b5a642;
+      --steam: #e6ddd4;
+      --magic-purple: #6b46c1;
+      --fire-orange: #ea580c;
+      --dark-steel: #1f2937;
     }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
-      scroll-snap-type: y proximity;
-      overflow-y: scroll;
-      position: relative;
-      z-index: 1;
-    }
-    section {
-      scroll-snap-align: none;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 2rem;
-      /*background-color: rgba(14, 12, 12, 0.75);*/
-      backdrop-filter: blur(2px);
-      margin-left: 180px;  /* Left border width */
-      margin-right: 180px; /* Right border width */
-    }
-    /* Banner styling */
-    
-    /*
-    header {
-      position: relative;
-      height: 700px;
-      width: 90vw;
-      overflow: hidden;
-      z-index: 20;
-      margin-left: 180px;
-      margin-right: 180px;
-    }
-    */
-    
-    header {
-  position: relative;
-  height: 700px;
-  width: 100vw;
-  left: 0;
-  margin-left: 0;
-  margin-right: 0;
-  overflow: hidden;
-  z-index: 200; /* higher than nav */
-}
-
-    header img {
-      width: 100%;
-      height: 700px;
-      object-fit: fill; 
-      user-select: none;
-      pointer-events: none;
+      font-family: 'Crimson Text', serif;
+      background: radial-gradient(circle at 50% 50%, #0f172a 0%, #000000 100%);
+      color: var(--steam);
+      overflow-x: hidden;
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20"><circle cx="10" cy="10" r="8" fill="%23b87333" opacity="0.3"/><circle cx="10" cy="10" r="2" fill="%23ea580c"/></svg>'), auto;
     }
 
-    /* Floating sticky menu */
+    .cinzel {
+      font-family: 'Cinzel', serif;
+    }
 
-    /*
-    nav {
+    /* Magical cursor effects */
+    .magic-hover {
+      cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 2l3 6 6 3-6 3-3 6-3-6-6-3 6-3z" fill="%23ea580c" opacity="0.8"/></svg>'), pointer;
+    }
+
+    /* Animated background particles */
+    #particles-js {
       position: fixed;
       top: 0;
       left: 0;
-      height: 100vh;
-      width: 180px;
-      background: linear-gradient(180deg, #000000 100%);
+      width: 100%;
+      height: 100%;
+      z-index: -2;
+    }
+
+    /* Steampunk gear animations */
+    .gear {
+      animation: rotate 20s linear infinite;
+    }
+    .gear-reverse {
+      animation: rotate 25s linear infinite reverse;
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* Magic orb floating animation */
+    .float {
+      animation: float 6s ease-in-out infinite;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-20px); }
+    }
+
+    /* Steam effect */
+    .steam {
+      position: relative;
+      overflow: hidden;
+    }
+    .steam::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(230, 221, 212, 0.1) 0%, transparent 70%);
+      animation: steam 8s ease-in-out infinite;
+    }
+    @keyframes steam {
+      0%, 100% { transform: translateY(0) scale(1); opacity: 0.3; }
+      50% { transform: translateY(-30px) scale(1.1); opacity: 0.1; }
+    }
+
+    /* Interactive card hover effects */
+    .forge-card {
+      background: linear-gradient(135deg, rgba(31, 41, 55, 0.8) 0%, rgba(17, 24, 39, 0.9) 100%);
+      border: 2px solid var(--copper);
+      transition: all 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .forge-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--fire-orange), var(--magic-purple), var(--brass), var(--fire-orange));
+      border-radius: inherit;
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .forge-card:hover::before {
+      opacity: 1;
+    }
+    .forge-card:hover {
+      transform: translateY(-10px) scale(1.02);
+      box-shadow: 0 20px 40px rgba(234, 88, 12, 0.3);
+    }
+
+    /* Magical button */
+    .magic-btn {
+      background: linear-gradient(45deg, var(--fire-orange), var(--magic-purple));
+      border: none;
+      color: white;
+      font-weight: 600;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      position: relative;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(234, 88, 12, 0.4);
+    }
+    .magic-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+      transition: left 0.5s;
+    }
+    .magic-btn:hover::before {
+      left: 100%;
+    }
+    .magic-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 40px rgba(234, 88, 12, 0.6);
+    }
+
+    /* Navigation orb */
+    .nav-orb {
+      position: fixed;
+      top: 50%;
+      right: 2rem;
+      transform: translateY(-50%);
+      z-index: 1000;
+      background: radial-gradient(circle, var(--magic-purple) 0%, var(--fire-orange) 100%);
+      border-radius: 50%;
+      width: 80px;
+      height: 80px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding-top: 3rem;
-      z-index: 100;
-    }*/
-
-    nav {
-  position: fixed;
-  top: 0;
-  left: 40px;        /* push menu 40px away from left edge */
-  height: 100vh;
-  width: 180px;
-  background: linear-gradient(180deg, #000000 100%);
-  z-index: 100;      /* less than header so banner covers menu */
-  box-shadow: 2px 0 6px rgba(0,0,0,0.7); /* subtle shadow */
-  border-radius: 0 8px 8px 0; /* optional rounding for style */
-}
-    
-    nav button {
-      background: linear-gradient(to right, #ff7f00, #ffae00);
-      color: #3b1f00;
-      font-weight: 700;
-      margin: 0.5rem 0;
-      padding: 0.8rem 1.2rem;
-      border: none;
-      border-radius: 9999px;
-      box-shadow: 0 0 10px #ffae00;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(107, 70, 193, 0.6);
       cursor: pointer;
-      width: 140px;
-      transition: background 0.3s ease, box-shadow 0.3s ease;
+      transition: all 0.3s ease;
     }
-    nav button:hover, nav button.active {
-      background: linear-gradient(to right, #ffae00, #ffd75a);
-      box-shadow: 0 0 20px #ffd75a;
-      color: #5a3200;
+    .nav-orb:hover {
+      transform: translateY(-50%) scale(1.1);
+      box-shadow: 0 0 50px rgba(107, 70, 193, 0.8);
     }
-
-    /* Sections fade in */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: all 1s ease-out;
-    }
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
+    .nav-orb.menu-open {
+      right: 320px;
+      transform: translateY(-50%) scale(0.8);
     }
 
-    /* Particle background container */
-    #particles-js {
+    /* Navigation menu */
+    .nav-menu {
       position: fixed;
-      top: 0; left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: -1;
-      background: #000000;
+      top: 50%;
+      right: -300px;
+      transform: translateY(-50%);
+      background: linear-gradient(135deg, rgba(31, 41, 55, 0.95) 0%, rgba(17, 24, 39, 0.98) 100%);
+      backdrop-filter: blur(20px);
+      border: 2px solid var(--copper);
+      border-radius: 20px 0 0 20px;
+      padding: 2rem;
+      transition: right 0.5s ease;
+      z-index: 999;
+      box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+      width: 280px;
+    }
+    .nav-menu.open {
+      right: 0;
+    }
+    .nav-menu button {
+      display: block;
+      width: 100%;
+      background: transparent;
+      border: 2px solid var(--copper);
+      color: var(--steam);
+      padding: 1rem;
+      margin: 0.5rem 0;
+      border-radius: 10px;
+      transition: all 0.3s ease;
+      font-family: 'Cinzel', serif;
+      font-weight: 600;
+    }
+    .nav-menu button:hover, .nav-menu button.active {
+      background: var(--fire-orange);
+      border-color: var(--fire-orange);
+      color: white;
+      transform: translateX(-10px);
     }
 
-    /* Instagram widget smaller but still readable */
-    #instagram-feed {
-      max-width: 90vw;
-      max-height: 420px;
-      margin: auto;
+    /* Section styling */
+    .section {
+      min-height: 100vh;
+      padding: 4rem 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+    }
+
+    /* Hero section */
+    .hero {
+      background: radial-gradient(ellipse at center, rgba(234, 88, 12, 0.2) 0%, transparent 70%);
+      text-align: center;
+    }
+
+    /* Forge workshop effect */
+    .workshop-bg {
+      background: linear-gradient(45deg, rgba(31, 41, 55, 0.1) 0%, rgba(17, 24, 39, 0.2) 100%);
+      position: relative;
+    }
+    .workshop-bg::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(234, 88, 12, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(107, 70, 193, 0.1) 0%, transparent 50%);
+      z-index: -1;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+      .nav-orb {
+        width: 60px;
+        height: 60px;
+        right: 1rem;
+      }
+      .nav-menu {
+        right: -250px;
+        padding: 1.5rem;
+      }
+      .section {
+        padding: 2rem 1rem;
+      }
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--fire-orange), var(--magic-purple));
+      z-index: 1001;
+      transition: width 0.3s ease;
+    }
+
+    /* Magic sparkles */
+    .sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--fire-orange);
+      border-radius: 50%;
+      animation: sparkle 2s linear infinite;
+    }
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
     }
   </style>
 </head>
 <body>
+  <!-- Scroll progress indicator -->
+  <div class="scroll-indicator" id="scrollIndicator"></div>
 
   <!-- Particle background -->
   <div id="particles-js"></div>
 
-  <!-- Sticky menu nav -->
-  <nav>
-    <button data-target="section-instagram" class="active">Our Latest Creations</button>
-    <button data-target="section-calendar">Where to Find Us</button>
-    <button data-target="section-commission">Request a Commission</button>
-    <button data-target="section-about">About Us</button>
+  <!-- Navigation Orb -->
+  <div class="nav-orb magic-hover" id="navOrb">
+    <div class="text-xs cinzel font-bold">MENU</div>
+    <div class="text-2xl">⚙️</div>
+  </div>
+
+  <!-- Navigation Menu -->
+  <nav class="nav-menu" id="navMenu">
+    <h3 class="cinzel text-xl mb-4 text-center text-orange-400">Navigation</h3>
+    <button data-target="hero" class="magic-hover">🏠 The Forge</button>
+    <button data-target="creations" class="magic-hover">✨ Creations</button>
+    <button data-target="events" class="magic-hover">📍 Events</button>
+    <button data-target="commission" class="magic-hover">🔥 Commissions</button>
+    <button data-target="about" class="magic-hover">🛠️ About</button>
   </nav>
 
-  <!-- Banner -->
-  <header>
-    <img src="assets/banner.png" alt="The Fantasy Forge Banner" />
-  </header>
+  <!-- Hero Section -->
+  <section id="hero" class="section hero">
+    <div class="steam">
+      <!-- Floating gears -->
+      <div class="absolute top-20 left-20 gear opacity-30">
+        <div class="text-6xl text-copper">⚙️</div>
+      </div>
+      <div class="absolute top-40 right-32 gear-reverse opacity-20">
+        <div class="text-4xl text-brass">⚙️</div>
+      </div>
+      <div class="absolute bottom-32 left-1/4 gear opacity-25">
+        <div class="text-8xl text-copper">⚙️</div>
+      </div>
 
-  <!-- Sections -->
-  <section id="section-instagram" class="fade-in">
-    <h2 class="text-3xl text-center mb-6">📸 Our Latest Creations</h2>
-    <div class="flex justify-center">
-      <div id="instagram-feed" class="flex flex-wrap justify-center gap-4"></div>
+      <!-- Main title -->
+      <div class="float mb-8">
+        <h1 class="cinzel text-6xl md:text-8xl font-bold bg-gradient-to-r from-fire-orange to-magic-purple bg-clip-text text-transparent mb-4">
+          The Fantasy Forge
+        </h1>
+        <div class="text-2xl md:text-3xl text-steam mb-6 italic">
+          Where Magic Meets Steam & Steel
+        </div>
+      </div>
+
+      <!-- Interactive elements -->
+      <div class="flex flex-wrap justify-center gap-6 mb-12">
+        <div class="forge-card p-6 rounded-xl magic-hover relative">
+          <div class="sparkle top-2 right-2"></div>
+          <div class="sparkle bottom-4 left-3" style="animation-delay: 0.5s;"></div>
+          <div class="text-4xl mb-2">🔮</div>
+          <div class="cinzel font-bold text-lg">Magical Artifacts</div>
+          <div class="text-sm opacity-80">Enchanted props & mystical items</div>
+        </div>
+        
+        <div class="forge-card p-6 rounded-xl magic-hover steam relative">
+          <div class="sparkle top-3 left-2" style="animation-delay: 1s;"></div>
+          <div class="text-4xl mb-2">⚙️</div>
+          <div class="cinzel font-bold text-lg">Gadgets & Contraptions</div>
+          <div class="text-sm opacity-80">To entertain busy minds</div>
+        </div>
+        
+        <div class="forge-card p-6 rounded-xl magic-hover relative">
+          <div class="sparkle top-1 right-4" style="animation-delay: 1.5s;"></div>
+          <div class="sparkle bottom-2 right-2" style="animation-delay: 2s;"></div>
+          <div class="text-4xl mb-2">🐉</div>
+          <div class="cinzel font-bold text-lg">Fantasy Creatures</div>
+          <div class="text-sm opacity-80">Dragons, griffins & more</div>
+        </div>
+      </div>
+
+      <button class="magic-btn magic-hover cinzel" onclick="document.getElementById('creations').scrollIntoView({behavior: 'smooth'})">
+        Enter the Forge
+      </button>
     </div>
-    <div class="embedsocial-hashtag" data-ref="85c3e6cf8a6763ac35f53880053d834f79e7c383"></div>
-    <script>
-      (function(d, s, id) {
-        if (d.getElementById(id)) return;
-        const js = d.createElement(s); js.id = id;
-        js.src = "https://embedsocial.com/cdn/ht.js";
-        d.getElementsByTagName("head")[0].appendChild(js);
-      })(document, "script", "EmbedSocialHashtagScript");
-    </script>
   </section>
 
-  <section id="section-calendar" class="fade-in">
-    <h2 class="text-3xl text-center mb-6">📍 Where to Find Us</h2>
-    <div class="flex flex-col lg:flex-row items-center justify-center gap-8 px-4">
-      <div class="w-[250px] flex-shrink-0">
-        <img 
+  <!-- Creations Section -->
+  <section id="creations" class="section workshop-bg">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="cinzel text-5xl font-bold text-center mb-12 bg-gradient-to-r from-fire-orange to-brass bg-clip-text text-transparent">
+        Our Latest Creations
+      </h2>
+      
+      <!-- Instagram embed area -->
+      <div class="forge-card p-8 rounded-2xl mb-8">
+        <div class="text-center mb-6">
+          <div class="text-2xl mb-4">📸 Fresh from the Workshop</div>
+          <div class="embedsocial-hashtag" data-ref="85c3e6cf8a6763ac35f53880053d834f79e7c383"></div>
+        </div>
+      </div>
+
+      <!-- Interactive gallery preview -->
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="forge-card p-6 rounded-xl magic-hover">
+          <div class="h-48 bg-gradient-to-br from-magic-purple to-fire-orange rounded-lg mb-4 flex items-center justify-center">
+            <div class="text-4xl">🗡️</div>
+          </div>
+          <h3 class="cinzel font-bold text-lg mb-2">Legendary Weapons</h3>
+          <p class="text-sm opacity-80">Swords, staffs, and magical armaments</p>
+        </div>
+        
+        <div class="forge-card p-6 rounded-xl magic-hover">
+          <div class="h-48 bg-gradient-to-br from-brass to-copper rounded-lg mb-4 flex items-center justify-center">
+            <div class="text-4xl">🏺</div>
+          </div>
+          <h3 class="cinzel font-bold text-lg mb-2">Mystical Artifacts</h3>
+          <p class="text-sm opacity-80">Ancient relics and magical vessels</p>
+        </div>
+        
+        <div class="forge-card p-6 rounded-xl magic-hover">
+          <div class="h-48 bg-gradient-to-br from-fire-orange to-magic-purple rounded-lg mb-4 flex items-center justify-center">
+            <div class="text-4xl">🎭</div>
+          </div>
+          <h3 class="cinzel font-bold text-lg mb-2">Character Masks</h3>
+          <p class="text-sm opacity-80">Bring your personas to life</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Events Section -->
+  <section id="events" class="section">
+    <div class="max-w-6xl mx-auto">
+      <h2 class="cinzel text-5xl font-bold text-center mb-12 bg-gradient-to-r from-brass to-fire-orange bg-clip-text text-transparent">
+        Where Magic Happens
+      </h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+        <div class="forge-card p-8 rounded-2xl">
+          <div class="float mb-6">
+            <div class="w-32 h-32 mx-auto bg-gradient-to-br from-magic-purple to-fire-orange rounded-full flex items-center justify-center text-6xl">
+              <img 
           src="assets/traveling-merchant.png"
           alt="Traveling Merchant" 
-          class="w-full drop-shadow-lg rounded-xl border border-yellow-600 float-merchant"
-          style="filter: drop-shadow(0 0 10px #ffb347);" 
-        />
-      </div>
-      <div class="w-full max-w-3xl">
-        <iframe
-          src="https://calendar.google.com/calendar/embed?src=32cffb5fb476f0c8d44d45efa417aa3c60b87e5fa3cd8d62a10f6d9fa2d9e37b%40group.calendar.google.com&ctz=America%2FHalifax"
-          style="border: 0"
-          width="100%"
-          height="600"
-          frameborder="0"
-          scrolling="no"
-          class="rounded-xl border border-yellow-700"
-        ></iframe>
+           />
+            </div>
+          </div>
+          <h3 class="cinzel text-2xl font-bold text-center mb-4">The Mobile Forge</h3>
+          <p class="text-center mb-6">
+            Our steampunk workshop travels across the Maritimes, bringing the magic directly to you. 
+            From medieval fairs to comic conventions, we're always on the move!
+          </p>
+          <div class="text-center">
+            <div class="inline-block bg-gradient-to-r from-fire-orange to-magic-purple text-white px-4 py-2 rounded-full">
+              📍 Halifax & Beyond
+            </div>
+          </div>
+        </div>
+        
+        <div class="forge-card p-6 rounded-2xl">
+          <h3 class="cinzel text-xl font-bold mb-4 text-center">Upcoming Events</h3>
+          <iframe
+            src="https://calendar.google.com/calendar/embed?src=32cffb5fb476f0c8d44d45efa417aa3c60b87e5fa3cd8d62a10f6d9fa2d9e37b%40group.calendar.google.com&ctz=America%2FHalifax"
+            style="border: 0"
+            width="100%"
+            height="400"
+            frameborder="0"
+            scrolling="no"
+            class="rounded-xl"
+          ></iframe>
+        </div>
       </div>
     </div>
   </section>
 
-  <section id="section-commission" class="fade-in">
-    <h2 class="text-3xl text-center mb-4">🔥 Request a Commission</h2>
-    <p class="text-center mb-6 max-w-xl mx-auto italic text-orange-200">
-      Have a dream prop, wild creature, or fantasy artifact in mind? Send us your vision, and we'll forge it in reality.
-    </p>
-    <form
-      action="https://formspree.io/f/xeokpkya"
-      method="POST"
-      class="bg-black bg-opacity-50 backdrop-blur-md border border-yellow-600 rounded-xl p-6 max-w-xl mx-auto space-y-4"
-    >
-      <input type="email" name="email" placeholder="Your Email" required
-        class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-      <input type="text" name="name" placeholder="Your Name" required
-        class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-      <textarea name="message" placeholder="What would you like printed?" required
-        class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded h-32" required></textarea>
-      <input type="text" name="references" placeholder="Reference Links or photos (optional)"
-        class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-      <input type="text" name="deadline" placeholder="Deadline (if any)"
-        class="w-full p-3 bg-gray-800 border border-yellow-600 text-white rounded" />
-      <div class="text-center pt-2">
-        <button type="submit" class="fantasy-btn">Forge My Print</button>
+  <!-- Commission Section -->
+  <section id="commission" class="section workshop-bg">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="cinzel text-5xl font-bold text-center mb-8 bg-gradient-to-r from-fire-orange to-magic-purple bg-clip-text text-transparent">
+        Forge Your Vision
+      </h2>
+      
+      <div class="forge-card p-8 rounded-2xl steam">
+        <div class="text-center mb-8">
+          <div class="float inline-block">
+            <div class="text-6xl mb-4">🔥</div>
+          </div>
+          <p class="text-lg italic text-orange-200 max-w-2xl mx-auto">
+            Have a dream weapon, mystical creature, or steampunk gadget in mind? 
+            Our master craftsmen will forge your imagination into reality, one layer at a time.
+          </p>
+        </div>
+
+        <form action="https://formspree.io/f/xeokpkya" method="POST" class="space-y-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block cinzel font-bold mb-2">Your Name</label>
+              <input type="text" name="name" required
+                class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all" />
+            </div>
+            <div>
+              <label class="block cinzel font-bold mb-2">Your Email</label>
+              <input type="email" name="email" required
+                class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all" />
+            </div>
+          </div>
+          
+          <div>
+            <label class="block cinzel font-bold mb-2">Describe Your Vision</label>
+            <textarea name="message" required rows="5"
+              placeholder="Tell us about your magical creation... What materials? What size? Any special features?"
+              class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all"></textarea>
+          </div>
+          
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label class="block cinzel font-bold mb-2">Reference Links (optional)</label>
+              <input type="text" name="references"
+                placeholder="Share inspiration images or links"
+                class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all" />
+            </div>
+            <div>
+              <label class="block cinzel font-bold mb-2">Deadline (optional)</label>
+              <input type="text" name="deadline"
+                placeholder="When do you need this forged?"
+                class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all" />
+            </div>
+          </div>
+          
+          <div class="text-center pt-4">
+            <button type="submit" class="magic-btn magic-hover cinzel text-lg">
+              ⚡ Begin the Forging Process ⚡
+            </button>
+          </div>
+        </form>
       </div>
-    </form>
+    </div>
   </section>
 
-  <section id="section-about" class="fade-in">
-    <div class="max-w-3xl mx-auto text-center">
-      <h2 class="text-3xl mb-4">🛠️ About The Fantasy Forge</h2>
-      <p class="mb-6 text-lg">
-        The Fantasy Forge is a mobile 3D print store powered by imagination, steam, and a touch of magic. 
-        From Halifax’s waterfront to fantasy fairs and local markets, we bring creations to life — one layer at a time.
-      </p>
-      <div class="flex justify-center mb-6">
-        <iframe 
-          src="https://www.instagram.com/p/DFkykSuRBLa/embed" 
-          width="400" 
-          height="480" 
-          frameborder="0" 
-          scrolling="no" 
-          allowtransparency="true" 
-          class="rounded-lg border border-yellow-700 shadow-lg"
-        ></iframe>
+  <!-- About Section -->
+  <section id="about" class="section">
+    <div class="max-w-5xl mx-auto text-center">
+      <h2 class="cinzel text-5xl font-bold mb-8 bg-gradient-to-r from-brass to-fire-orange bg-clip-text text-transparent">
+        The Forge Masters
+      </h2>
+      
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div class="forge-card p-8 rounded-2xl">
+          <div class="mb-6">
+            <iframe 
+              src="https://www.instagram.com/p/DFkykSuRBLa/embed" 
+              width="100%" 
+              height="480" 
+              frameborder="0" 
+              scrolling="no" 
+              allowtransparency="true" 
+              class="rounded-lg"
+            ></iframe>
+          </div>
+        </div>
+        
+        <div class="text-left">
+          <div class="float mb-8">
+            <div class="text-8xl mb-4">🏭</div>
+          </div>
+          <h3 class="cinzel text-3xl font-bold mb-6">Born from Steam & Dreams</h3>
+          <p class="text-lg mb-6 leading-relaxed">
+            The Fantasy Forge emerged from the creative minds of two Halifax dreamers who believe 
+            that magic isn't just in stories—it's in the sparks that fly when imagination meets 
+            innovation. Our mobile workshop travels the Maritimes, transforming digital dreams 
+            into tangible treasures.
+          </p>
+          <p class="text-lg mb-8 leading-relaxed">
+            From our steampunk-inspired mobile forge to the intricate details of every print, 
+            we blend cutting-edge technology with old-world craftsmanship. Every piece we create 
+            carries a spark of the magic that drives us.
+          </p>
+          <div class="flex flex-wrap gap-4">
+            <div class="bg-gradient-to-r from-fire-orange to-magic-purple text-white px-6 py-3 rounded-full cinzel font-bold">
+              ⚙️ Precision Engineering
+            </div>
+            <div class="bg-gradient-to-r from-brass to-copper text-white px-6 py-3 rounded-full cinzel font-bold">
+              🎨 Artistic Vision
+            </div>
+            <div class="bg-gradient-to-r from-magic-purple to-fire-orange text-white px-6 py-3 rounded-full cinzel font-bold">
+              ✨ Magical Touch
+            </div>
+          </div>
+        </div>
       </div>
-      <p class="italic text-orange-300">
-        Born from the sparks of creativity and forged by two dreamers who call Halifax home.
-      </p>
     </div>
   </section>
 
   <!-- Footer -->
-  <footer class="text-center py-4 text-sm text-yellow-500 bg-black border-t border-yellow-700" style="margin-left: 180px; margin-right: 180px;">
-    &copy; 2025 The Fantasy Forge • Forged in Fire & Steam<br />
-    <a href="privacy-policy.html" class="underline text-yellow-400">Privacy Policy</a>
+  <footer class="bg-gradient-to-r from-gray-900 to-black border-t-2 border-copper py-8">
+    <div class="max-w-6xl mx-auto text-center">
+      <div class="cinzel text-2xl font-bold mb-4 bg-gradient-to-r from-fire-orange to-brass bg-clip-text text-transparent">
+        The Fantasy Forge
+      </div>
+      <p class="mb-4">Where Magic Meets Steam & Steel</p>
+      <p class="text-sm opacity-70 mb-4">
+        &copy; 2025 The Fantasy Forge • Forged in Fire & Steam • Halifax, Nova Scotia
+      </p>
+      <a href="privacy-policy.html" class="text-copper hover:text-fire-orange underline transition-colors">
+        Privacy Policy
+      </a>
+    </div>
   </footer>
 
-  <!-- Fade-in Animation -->
+  <!-- Scripts -->
   <script>
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.2 });
-    document.querySelectorAll('.fade-in').forEach(section => observer.observe(section));
-  </script>
+    // Instagram embed script
+    (function(d, s, id) {
+      if (d.getElementById(id)) return;
+      const js = d.createElement(s); js.id = id;
+      js.src = "https://embedsocial.com/cdn/ht.js";
+      d.getElementsByTagName("head")[0].appendChild(js);
+    })(document, "script", "EmbedSocialHashtagScript");
 
-  <!-- Navigation scroll -->
-  <script>
-    const buttons = document.querySelectorAll('nav button');
-    buttons.forEach(button => {
+    // Navigation functionality
+    const navOrb = document.getElementById('navOrb');
+    const navMenu = document.getElementById('navMenu');
+    const navButtons = navMenu.querySelectorAll('button');
+    const scrollIndicator = document.getElementById('scrollIndicator');
+
+    navOrb.addEventListener('click', () => {
+      navMenu.classList.toggle('open');
+      navOrb.classList.toggle('menu-open');
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!navMenu.contains(e.target) && !navOrb.contains(e.target)) {
+        navMenu.classList.remove('open');
+        navOrb.classList.remove('menu-open');
+      }
+    });
+
+    // Smooth scrolling for navigation
+    navButtons.forEach(button => {
       button.addEventListener('click', () => {
         const target = document.getElementById(button.dataset.target);
         if (target) {
           target.scrollIntoView({ behavior: 'smooth' });
-          buttons.forEach(btn => btn.classList.remove('active'));
-          button.classList.add('active');
+          navMenu.classList.remove('open');
+          navOrb.classList.remove('menu-open');
         }
       });
     });
 
-    // Update active button on scroll
+    // Scroll progress indicator
     window.addEventListener('scroll', () => {
-      let currentSectionId = '';
-      document.querySelectorAll('section').forEach(section => {
+      const scrollTop = window.pageYOffset;
+      const docHeight = document.body.scrollHeight - window.innerHeight;
+      const scrollPercent = (scrollTop / docHeight) * 100;
+      scrollIndicator.style.width = scrollPercent + '%';
+
+      // Update active navigation button
+      const sections = document.querySelectorAll('.section');
+      let currentSection = '';
+      
+      sections.forEach(section => {
         const sectionTop = section.offsetTop - 200;
-        if (pageYOffset >= sectionTop) {
-          currentSectionId = section.id;
+        if (scrollTop >= sectionTop) {
+          currentSection = section.id;
         }
       });
-      buttons.forEach(btn => btn.classList.remove('active'));
-      if(currentSectionId) {
-        const activeBtn = [...buttons].find(b => b.dataset.target === currentSectionId);
-        if(activeBtn) activeBtn.classList.add('active');
+
+      navButtons.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.target === currentSection);
+      });
+    });
+
+    // Particle configuration
+    particlesJS('particles-js', {
+      particles: {
+        number: { value: 60, density: { enable: true, value_area: 800 } },
+        color: { value: "#ea580c" },
+        shape: { type: "circle" },
+        opacity: { value: 0.3, random: true, anim: { enable: true, speed: 1, opacity_min: 0.1 } },
+        size: { value: 3, random: true, anim: { enable: true, speed: 2, size_min: 0.1 } },
+        line_linked: { enable: false },
+        move: {
+          enable: true,
+          speed: 1,
+          direction: "top",
+          random: true,
+          straight: false,
+          out_mode: "out"
+        }
+      },
+      interactivity: {
+        detect_on: "canvas",
+        events: {
+          onhover: { enable: true, mode: "repulse" },
+          onclick: { enable: true, mode: "push" },
+          resize: true
+        },
+        modes: {
+          repulse: { distance: 100, duration: 0.4 },
+          push: { particles_nb: 4 }
+        }
+      },
+      retina_detect: true
+    });
+
+    // Dynamic sparkle generation
+    function createSparkle() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.top = Math.random() * 100 + '%';
+      sparkle.style.animationDelay = Math.random() * 2 + 's';
+      
+      const cards = document.querySelectorAll('.forge-card');
+      if (cards.length > 0) {
+        const randomCard = cards[Math.floor(Math.random() * cards.length)];
+        randomCard.appendChild(sparkle);
+        
+        setTimeout(() => {
+          if (sparkle.parentNode) {
+            sparkle.parentNode.removeChild(sparkle);
+          }
+        }, 2000);
+      }
+    }
+
+    // Create sparkles periodically
+    setInterval(createSparkle, 3000);
+
+    // Add magical cursor trail effect
+    let mouseTrail = [];
+    document.addEventListener('mousemove', (e) => {
+      mouseTrail.push({
+        x: e.clientX,
+        y: e.clientY,
+        time: Date.now()
+      });
+      
+      // Keep only recent trail points
+      mouseTrail = mouseTrail.filter(point => Date.now() - point.time < 500);
+      
+      // Create trail effect on magical elements
+      if (e.target.classList.contains('magic-hover')) {
+        const trail = document.createElement('div');
+        trail.style.position = 'fixed';
+        trail.style.left = e.clientX + 'px';
+        trail.style.top = e.clientY + 'px';
+        trail.style.width = '4px';
+        trail.style.height = '4px';
+        trail.style.background = '#ea580c';
+        trail.style.borderRadius = '50%';
+        trail.style.pointerEvents = 'none';
+        trail.style.zIndex = '9999';
+        trail.style.animation = 'sparkle 0.5s ease-out forwards';
+        document.body.appendChild(trail);
+        
+        setTimeout(() => {
+          if (trail.parentNode) {
+            trail.parentNode.removeChild(trail);
+          }
+        }, 500);
       }
     });
-  </script>
 
-  <!-- Particles config -->
-  <script>
-    particlesJS('particles-js',
-      {
-        "particles": {
-          "number": {
-            "value": 80,
-            "density": {"enable": true,"value_area": 800}
-          },
-          "color": {"value": "#ff7f00"},
-          "shape": {
-            "type": "circle",
-            "stroke": {"width": 0,"color": "#000000"},
-            "polygon": {"nb_sides": 5}
-          },
-          "opacity": {
-            "value": 0.7,
-            "random": false,
-            "anim": {"enable": true,"speed": 1,"opacity_min": 0.1,"sync": false}
-          },
-          "size": {
-            "value": 4,
-            "random": true,
-            "anim": {"enable": true,"speed": 10,"size_min": 0.1,"sync": false}
-          },
-          "line_linked": {
-            "enable": false
-          },
-          "move": {
-            "enable": true,
-            "speed": 3,
-            "direction": "top",
-            "random": true,
-            "straight": false,
-            "out_mode": "out",
-            "bounce": false,
-            "attract": {"enable": false,"rotateX": 600,"rotateY": 1200}
+    // Gear rotation on scroll
+    window.addEventListener('scroll', () => {
+      const scrollY = window.pageYOffset;
+      const gears = document.querySelectorAll('.gear, .gear-reverse');
+      gears.forEach((gear, index) => {
+        const speed = (index + 1) * 0.5;
+        gear.style.transform = `rotate(${scrollY * speed}deg)`;
+      });
+    });
+
+    // Form enhancement
+    const form = document.querySelector('form');
+    if (form) {
+      form.addEventListener('submit', (e) => {
+        const submitButton = form.querySelector('button[type="submit"]');
+        submitButton.innerHTML = '⚡ Forging in Progress... ⚡';
+        submitButton.disabled = true;
+        
+        // Re-enable after 3 seconds in case of error
+        setTimeout(() => {
+          submitButton.innerHTML = '⚡ Begin the Forging Process ⚡';
+          submitButton.disabled = false;
+        }, 3000);
+      });
+    }
+
+    // Intersection Observer for animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // Observe all cards for entrance animations
+    document.querySelectorAll('.forge-card').forEach(card => {
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(50px)';
+      card.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+      observer.observe(card);
+    });
+
+    // Steam effect enhancement
+    const steamElements = document.querySelectorAll('.steam');
+    steamElements.forEach(element => {
+      setInterval(() => {
+        const steamParticle = document.createElement('div');
+        steamParticle.style.position = 'absolute';
+        steamParticle.style.width = '2px';
+        steamParticle.style.height = '2px';
+        steamParticle.style.background = 'rgba(230, 221, 212, 0.5)';
+        steamParticle.style.borderRadius = '50%';
+        steamParticle.style.left = Math.random() * 100 + '%';
+        steamParticle.style.bottom = '0';
+        steamParticle.style.pointerEvents = 'none';
+        steamParticle.style.animation = 'float 3s ease-out forwards';
+        element.appendChild(steamParticle);
+        
+        setTimeout(() => {
+          if (steamParticle.parentNode) {
+            steamParticle.parentNode.removeChild(steamParticle);
           }
-        },
-        "interactivity": {
-          "detect_on": "canvas",
-          "events": {
-            "onhover": {"enable": true,"mode": "repulse"},
-            "onclick": {"enable": true,"mode": "push"},
-            "resize": true
-          },
-          "modes": {
-            "grab": {"distance": 200,"line_linked": {"opacity": 1}},
-            "bubble": {"distance": 200,"size": 8,"duration": 2,"opacity": 0.8,"speed": 3},
-            "repulse": {"distance": 100,"duration": 0.4},
-            "push": {"particles_nb": 4},
-            "remove": {"particles_nb": 2}
-          }
-        },
-        "retina_detect": true
-      }
-    );
+        }, 3000);
+      }, 2000);
+    });
   </script>
 </body>
 </html>
