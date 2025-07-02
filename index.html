@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Fantasy Forge - Where Magic Meets Steam</title>
+  <title>The Fantasy Forge</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
@@ -50,6 +50,20 @@
       z-index: -2;
     }
 
+    .hero-title-box {
+  height: 200px;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+    .hero-title-box .float {
+     animation: float-small 6s ease-in-out infinite;
+    }
+
     /* Steampunk gear animations */
     .gear {
       animation: rotate 20s linear infinite;
@@ -66,10 +80,15 @@
     .float {
       animation: float 6s ease-in-out infinite;
     }
+
     @keyframes float {
       0%, 100% { transform: translateY(0px); }
       50% { transform: translateY(-20px); }
     }
+    @keyframes float-small {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-20px); } /* smaller float */
+      }
 
     /* Steam effect */
     .steam {
@@ -127,6 +146,7 @@
       color: white;
       font-weight: 600;
       padding: 1rem 2rem;
+      margin-bottom: 1rem; 
       border-radius: 50px;
       position: relative;
       overflow: hidden;
@@ -293,6 +313,13 @@
       0%, 100% { opacity: 0; transform: scale(0); }
       50% { opacity: 1; transform: scale(1); }
     }
+
+    .dark-calendar-wrapper {
+  filter: invert(1) hue-rotate(180deg);
+  background-color: #0f172a; 
+  padding: 1rem;
+  border-radius: 1rem;
+}
   </style>
 </head>
 <body>
@@ -323,26 +350,29 @@
     <div class="steam">
       <!-- Floating gears -->
       <div class="absolute top-20 left-20 gear opacity-30">
-        <div class="text-6xl text-copper">⚙️</div>
+        <div class="text-6xl">🔮</div>
       </div>
       <div class="absolute top-40 right-32 gear-reverse opacity-20">
-        <div class="text-4xl text-brass">⚙️</div>
+        <div class="text-4xl text-brass">🗡️</div>
       </div>
       <div class="absolute bottom-32 left-1/4 gear opacity-25">
-        <div class="text-8xl text-copper">⚙️</div>
+        <div class="text-8xl text-copper">🐉</div>
       </div>
 
       <!-- Main title -->
-      <div class="float mb-8">
-        <h1 class="cinzel text-6xl md:text-8xl font-bold bg-gradient-to-r from-fire-orange to-magic-purple bg-clip-text text-transparent mb-4">
-          The Fantasy Forge
-        </h1>
-        <div class="text-2xl md:text-3xl text-steam mb-6 italic">
-          Where Magic Meets Steam & Steel
-        </div>
-      </div>
+      <div class="hero-title-box relative overflow-hidden mb-8">
+  <div class="float">
+    <h1 class="cinzel text-6xl md:text-8xl font-bold">
+      The Fantasy Forge
+    </h1>
+    <div class="text-2xl md:text-3xl text-steam mb-6 italic">
+      Where Handcrafted Art Meets Everyday Magic
+    </div>
+  </div>
+</div>
 
-      <!-- Interactive elements -->
+
+      <!-- Interactive elements --
       <div class="flex flex-wrap justify-center gap-6 mb-12">
         <div class="forge-card p-6 rounded-xl magic-hover relative">
           <div class="sparkle top-2 right-2"></div>
@@ -367,6 +397,7 @@
           <div class="text-sm opacity-80">Dragons, griffins & more</div>
         </div>
       </div>
+    -->
 
       <button class="magic-btn magic-hover cinzel" onclick="document.getElementById('creations').scrollIntoView({behavior: 'smooth'})">
         Enter the Forge
@@ -377,20 +408,23 @@
   <!-- Creations Section -->
   <section id="creations" class="section workshop-bg">
     <div class="max-w-6xl mx-auto">
-      <h2 class="cinzel text-5xl font-bold text-center mb-12 bg-gradient-to-r from-fire-orange to-brass bg-clip-text text-transparent">
+      <!--
+      <h2 class="cinzel text-5xl font-bold text-center mb-12 bg-gradient-to-r from-fire-orange to-brass bg-clip-text">
         Our Latest Creations
       </h2>
+      -->
       
       <!-- Instagram embed area -->
       <div class="forge-card p-8 rounded-2xl mb-8">
         <div class="text-center mb-6">
-          <div class="text-2xl mb-4">📸 Fresh from the Workshop</div>
+          <div class="cinzel font-bold text-3xl mb-4">📸 Fresh from the Workshop</div>
           <div class="embedsocial-hashtag" data-ref="85c3e6cf8a6763ac35f53880053d834f79e7c383"></div>
         </div>
       </div>
 
       <!-- Interactive gallery preview -->
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <a href="https://www.instagram.com/thefantasyforgehfx/" target="_blank" class="block">
         <div class="forge-card p-6 rounded-xl magic-hover">
           <div class="h-48 bg-gradient-to-br from-magic-purple to-fire-orange rounded-lg mb-4 flex items-center justify-center">
             <div class="text-4xl">🗡️</div>
@@ -398,7 +432,8 @@
           <h3 class="cinzel font-bold text-lg mb-2">Legendary Weapons</h3>
           <p class="text-sm opacity-80">Swords, staffs, and magical armaments</p>
         </div>
-        
+        </a>
+        <a href="https://www.instagram.com/thefantasyforgehfx/" target="_blank" class="block">
         <div class="forge-card p-6 rounded-xl magic-hover">
           <div class="h-48 bg-gradient-to-br from-brass to-copper rounded-lg mb-4 flex items-center justify-center">
             <div class="text-4xl">🏺</div>
@@ -406,7 +441,8 @@
           <h3 class="cinzel font-bold text-lg mb-2">Mystical Artifacts</h3>
           <p class="text-sm opacity-80">Ancient relics and magical vessels</p>
         </div>
-        
+        </a>
+        <a href="https://www.instagram.com/thefantasyforgehfx/" target="_blank" class="block">
         <div class="forge-card p-6 rounded-xl magic-hover">
           <div class="h-48 bg-gradient-to-br from-fire-orange to-magic-purple rounded-lg mb-4 flex items-center justify-center">
             <div class="text-4xl">🎭</div>
@@ -414,21 +450,18 @@
           <h3 class="cinzel font-bold text-lg mb-2">Character Masks</h3>
           <p class="text-sm opacity-80">Bring your personas to life</p>
         </div>
+        </a>
       </div>
     </div>
   </section>
 
   <!-- Events Section -->
   <section id="events" class="section">
-    <div class="max-w-6xl mx-auto">
-      <h2 class="cinzel text-5xl font-bold text-center mb-12 bg-gradient-to-r from-brass to-fire-orange bg-clip-text text-transparent">
-        Where Magic Happens
-      </h2>
-      
+    <div class="max-w-6xl mx-auto">      
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div class="forge-card p-8 rounded-2xl">
+        <div class="forge-card p-6 rounded-2xl">
           <div class="float mb-6">
-            <div class="w-32 h-32 mx-auto bg-gradient-to-br from-magic-purple to-fire-orange rounded-full flex items-center justify-center text-6xl">
+            <div class="w-48 h-48 mx-auto bg-gradient-to-br from-magic-purple to-fire-orange rounded-full flex items-center justify-center text-6xl">
               <img 
           src="assets/traveling-merchant.png"
           alt="Traveling Merchant" 
@@ -436,9 +469,9 @@
             </div>
           </div>
           <h3 class="cinzel text-2xl font-bold text-center mb-4">The Mobile Forge</h3>
-          <p class="text-center mb-6">
-            Our steampunk workshop travels across the Maritimes, bringing the magic directly to you. 
-            From medieval fairs to comic conventions, we're always on the move!
+          <p class="text-center mb-8">
+            Our workshop travels across the Maritimes, bringing the magic directly to you. 
+            From Farmers markets to Artisan Craft Shows, we're always on the move!
           </p>
           <div class="text-center">
             <div class="inline-block bg-gradient-to-r from-fire-orange to-magic-purple text-white px-4 py-2 rounded-full">
@@ -448,9 +481,10 @@
         </div>
         
         <div class="forge-card p-6 rounded-2xl">
-          <h3 class="cinzel text-xl font-bold mb-4 text-center">Upcoming Events</h3>
+          <h3 class="cinzel text-2xl font-bold mb-4 text-center">Upcoming Events</h3>
+          <div class="dark-calendar-wrapper">
           <iframe
-            src="https://calendar.google.com/calendar/embed?src=32cffb5fb476f0c8d44d45efa417aa3c60b87e5fa3cd8d62a10f6d9fa2d9e37b%40group.calendar.google.com&ctz=America%2FHalifax"
+            src="https://calendar.google.com/calendar/embed?src=32cffb5fb476f0c8d44d45efa417aa3c60b87e5fa3cd8d62a10f6d9fa2d9e37b%40group.calendar.google.com&ctz=America%2FHalifax&showNav=0&showPrint=0&showTabs=0&showCalendars=0"
             style="border: 0"
             width="100%"
             height="400"
@@ -458,6 +492,7 @@
             scrolling="no"
             class="rounded-xl"
           ></iframe>
+          </div>
         </div>
       </div>
     </div>
@@ -511,9 +546,8 @@
             </div>
             <div>
               <label class="block cinzel font-bold mb-2">Deadline (optional)</label>
-              <input type="text" name="deadline"
-                placeholder="When do you need this forged?"
-                class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all" />
+              <input type="date" name="deadline" class="w-full p-4 bg-gray-800/80 border-2 border-copper text-steam rounded-lg focus:border-fire-orange focus:outline-none transition-all" />
+
             </div>
           </div>
           
@@ -551,20 +585,14 @@
         
         <div class="text-left">
           <div class="float mb-8">
-            <div class="text-8xl mb-4">🏭</div>
+            <div class="text-8xl mb-4">🧙‍♂️🧝</div>
           </div>
           <h3 class="cinzel text-3xl font-bold mb-6">Born from Steam & Dreams</h3>
           <p class="text-lg mb-6 leading-relaxed">
-            The Fantasy Forge emerged from the creative minds of two Halifax dreamers who believe 
-            that magic isn't just in stories—it's in the sparks that fly when imagination meets 
-            innovation. Our mobile workshop travels the Maritimes, transforming digital dreams 
-            into tangible treasures.
+             Born from sparks of creativity and forged by two dreamers who call Halifax home. The Fantasy Forge is a mobile 3D print store powered by imagination, 
+             steam, and a touch of magic. From Halifax’s waterfront to fantasy fairs and local markets, we bring creations to life — one layer at a time.
           </p>
-          <p class="text-lg mb-8 leading-relaxed">
-            From our steampunk-inspired mobile forge to the intricate details of every print, 
-            we blend cutting-edge technology with old-world craftsmanship. Every piece we create 
-            carries a spark of the magic that drives us.
-          </p>
+        
           <div class="flex flex-wrap gap-4">
             <div class="bg-gradient-to-r from-fire-orange to-magic-purple text-white px-6 py-3 rounded-full cinzel font-bold">
               ⚙️ Precision Engineering
@@ -587,7 +615,7 @@
       <div class="cinzel text-2xl font-bold mb-4 bg-gradient-to-r from-fire-orange to-brass bg-clip-text text-transparent">
         The Fantasy Forge
       </div>
-      <p class="mb-4">Where Magic Meets Steam & Steel</p>
+      <p class="mb-4">Where Handcrafted Art Meets Everyday Magic</p>
       <p class="text-sm opacity-70 mb-4">
         &copy; 2025 The Fantasy Forge • Forged in Fire & Steam • Halifax, Nova Scotia
       </p>
